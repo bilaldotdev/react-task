@@ -3,8 +3,11 @@ import { TaskCardProps } from '../../../types/task.types';
 import Card from '../../../components/Card';
 import Stack from '../../../components/Stack';
 
-const TaskCard = memo((props: TaskCardProps) => {
+const Component = <T extends TaskCardProps>(
+  props: T['checkbox'] extends true ? Required<TaskCardProps> : T
+) => {
   const { task, checkbox, checked, onToggleChecked } = props || {};
+
   return (
     <Card>
       <Stack>
@@ -22,6 +25,8 @@ const TaskCard = memo((props: TaskCardProps) => {
       </Stack>
     </Card>
   );
-});
+};
+
+const TaskCard = memo(Component) as typeof Component;
 
 export default TaskCard;
